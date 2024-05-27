@@ -113,7 +113,7 @@
             <feature name="NfcPlugin">
                 <param name="ios-package" value="NfcPlugin" />
             </feature>
-            <preference name="deployment-target" value="11" />
+            <preference name="deployment-target" value="12" />
             <preference name="SwiftVersion" value="4" />
         </config-file>
 
