@@ -120,7 +120,6 @@
         <source-file src="src/ios/NFCTagReaderDelegate.swift" />
         <source-file src="src/ios/NFCNDEFReaderDelegate.swift" />
         <source-file src="src/ios/NFCNDEFWriterDelegate.swift" />
-        <source-file src="src/ios/AppDelegate+NFC.swift" />
         <source-file src="src/ios/Utils.swift" />
         <source-file src="src/ios/ISO14443.swift" />
         <source-file src="src/ios/NFCPlugin-Bridging-Header.h" />
