@@ -14,14 +14,18 @@ extension AppDelegate {
         
         // Confirm that the NSUserActivity object contains a valid NDEF message.
         if #available(iOS 12.0, *) {
-            let ndefMessage = userActivity.ndefMessagePayload
-            guard ndefMessage.records.count > 0,
-            ndefMessage.records[0].typeNameFormat != .empty else {
+            guard let ndefMessage = userActivity.ndefMessagePayload,
+                  ndefMessage.records.count > 0,
+                  ndefMessage.records[0].typeNameFormat != .empty else {
                 return false
             }
-            let nfcPluginInstance: NfcPlugin = self.viewController.getCommandInstance("NfcPlugin") as! NfcPlugin
             
-            var resolved: Bool = false
+            guard let nfcPluginInstance = self.viewController.getCommandInstance("NfcPlugin") as? NfcPlugin else {
+                return false
+            }
+            
+            var resolved = false
+            let lockQueue = DispatchQueue(label: "resolvedLockQueue")
             NSLog(nfcPluginInstance.debugDescription)
                 
             DispatchQueue.global().async {
@@ -33,12 +37,16 @@ extension AppDelegate {
                     } else {
                         let jsonDictionary = ndefMessage.ndefMessageToJSON()
                         nfcPluginInstance.sendThroughChannel(jsonDictionary: jsonDictionary)
-                        resolved = true
+                        
+                        lockQueue.sync {
+                            resolved = true
+                        }
                         return
                     }
                 }
             }
-            return resolved
+            
+            return lockQueue.sync { resolved }
             
         } else {
             return false
