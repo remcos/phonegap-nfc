@@ -114,7 +114,7 @@
                 <param name="ios-package" value="NfcPlugin" />
             </feature>
             <preference name="deployment-target" value="11" />
-            <preference name="SwiftVersion" value="4" />
+            <preference name="SwiftVersion" value="5.9.2" />
         </config-file>
 
         <source-file src="src/ios/NFCTapPlugin.swift" />
