@@ -17,7 +17,7 @@ class NFCTagReaderDelegate: NSObject, NFCTagReaderSessionDelegate {
         super.init()
         //iso14443 => detection for ISO 7816-compatible and MIFARE
         //iso15693 => detection for ISO 15693
-        session = NFCTagReaderSession(pollingOption: [.iso14443, .iso15693], delegate: self, queue: nil )
+        session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: nil )
         if (self.session == nil) {
             self.completed(nil, "NFC is not available" as? Error);
             return
