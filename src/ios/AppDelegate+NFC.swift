@@ -1,8 +1,3 @@
-//
-//  AppDelegate+NFC.swift
-//
-//  Created by André Gonçalves on 13/04/2020.
-//
 import CoreNFC
 
 extension AppDelegate {
@@ -26,22 +21,22 @@ extension AppDelegate {
             }
             let nfcPluginInstance: NfcPlugin = self.viewController.getCommandInstance("NfcPlugin") as! NfcPlugin
             
-            var resolved: Bool = false;
-                NSLog(nfcPluginInstance.debugDescription);
+            var resolved: Bool = false
+            NSLog(nfcPluginInstance.debugDescription)
                 
-                DispatchQueue.global().async {
-                    let waitingTimeInterval: Double = 0.1;
-                    print("<NFC> Did start timeout")
-                    for _ in 1...2000 { // 5?s timeout
-                        if ( !nfcPluginInstance.isListeningNDEF ) {
+            DispatchQueue.global().async {
+                let waitingTimeInterval: Double = 0.1
+                print("<NFC> Did start timeout")
+                for _ in 1...2000 { // 5?s timeout
+                    if !nfcPluginInstance.isListeningNDEF {
                         Thread.sleep(forTimeInterval: waitingTimeInterval)
-                        } else {
-                            let jsonDictionary = ndefMessage.ndefMessageToJSON()
-                            nfcPluginInstance.sendThroughChannel(jsonDictionary: jsonDictionary)
-                            resolved = true
-                            return
-                        }
+                    } else {
+                        let jsonDictionary = ndefMessage.ndefMessageToJSON()
+                        nfcPluginInstance.sendThroughChannel(jsonDictionary: jsonDictionary)
+                        resolved = true
+                        return
                     }
+                }
             }
             return resolved
             
